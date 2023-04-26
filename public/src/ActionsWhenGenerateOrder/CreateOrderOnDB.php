@@ -2,11 +2,9 @@
 
 namespace Project\DesignPattern\ActionsWhenGenerateOrder;
 
-use Project\DesignPattern\Order;
-
-class CreateOrderOnDB implements ActionWhenOrderCreated
+class CreateOrderOnDB implements \SplObserver
 {
-    public function executeAction(Order $order): void
+    public function update(\SplSubject $order): void
     {
         echo "Saving order on database";
     }

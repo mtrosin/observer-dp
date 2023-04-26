@@ -2,11 +2,9 @@
 
 namespace Project\DesignPattern\ActionsWhenGenerateOrder;
 
-use Project\DesignPattern\Order;
-
-class GenerateOrderLog implements ActionWhenOrderCreated
+class GenerateOrderLog implements \SplObserver
 {
-    public function executeAction(Order $order): void
+    public function update(\SplSubject $order): void
     {
         echo "Generating order created log";
     }

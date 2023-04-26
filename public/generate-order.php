@@ -9,7 +9,7 @@ $clientName = $argv[3];
 
 $generateOrder = new GenerateOrder($budgetValue, $itemAmount, $clientName);
 $generateOrderHandler = new GenerateOrderHandler();
-$generateOrderHandler->addActionWhenCreatedOrder(new \Project\DesignPattern\ActionsWhenGenerateOrder\CreateOrderOnDB());
-$generateOrderHandler->addActionWhenCreatedOrder(new \Project\DesignPattern\ActionsWhenGenerateOrder\SendOrderByMail());
-$generateOrderHandler->addActionWhenCreatedOrder(new \Project\DesignPattern\ActionsWhenGenerateOrder\GenerateOrderLog());
+$generateOrderHandler->attach(new \Project\DesignPattern\ActionsWhenGenerateOrder\CreateOrderOnDB());
+$generateOrderHandler->attach(new \Project\DesignPattern\ActionsWhenGenerateOrder\SendOrderByMail());
+$generateOrderHandler->attach(new \Project\DesignPattern\ActionsWhenGenerateOrder\GenerateOrderLog());
 $generateOrderHandler->execute($generateOrder);

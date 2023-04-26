@@ -2,12 +2,11 @@
 
 namespace Project\DesignPattern\ActionsWhenGenerateOrder;
 
-use Project\DesignPattern\Order;
-
-class SendOrderByMail implements ActionWhenOrderCreated
+class SendOrderByMail implements \SplObserver
 {
-    public function executeAction(Order $order): void
+    public function update(\SplSubject $order): void
     {
+        echo $order->order->clientName;
         echo "Sending order created e-mail";
     }
 }

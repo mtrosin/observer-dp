@@ -2,19 +2,16 @@
 
 namespace Project\DesignPattern;
 
-use Project\DesignPattern\ActionsWhenGenerateOrder\ActionWhenOrderCreated;
+use Project\DesignPattern\Order;
+use SplObserver;
 
-class GenerateOrderHandler
+class GenerateOrderHandler implements \SplSubject
 {
     private array $actionsAfterGeneratedOrder = [];
+    public Order $order;
 
     public function __construct(/* OrderRepository, MailService */)
     {
-    }
-
-    public function addActionWhenCreatedOrder(ActionWhenOrderCreated $action)
-    {
-        $this->actionsAfterGeneratedOrder[] = $action;
     }
 
     public function execute(GenerateOrder $generateOrder)
@@ -28,8 +25,24 @@ class GenerateOrderHandler
         $order->clientName = $generateOrder->clientName;
         $order->budget = $budget;
 
-        foreach($this->actionsAfterGeneratedOrder as $action) {
-            $action->executeAction($order);
+        $this->order = $order;
+        $this->notify();
+    }
+
+    public function attach(SplObserver $observer)
+    {
+        $this->actionsAfterGeneratedOrder = $observer;
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        
+    }
+
+    public function notify()
+    {
+        foreach($this->actionsAfterGeneratedOrder as $action){
+            $action->update($this);
         }
     }
 }
